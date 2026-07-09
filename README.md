@@ -2,6 +2,8 @@
 
 A local web viewer for the device table stored in Confluence. Fetches the table, displays it with an intuitive UI, and provides network utilities like ping checks and port scanning.
 
+![Dashboard preview](dashboard.webp)
+
 ## Features
 
 - **Live Confluence Sync**: Fetches and displays the device table from Confluence
