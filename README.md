@@ -1,4 +1,4 @@
-# Hopkins TS Lab – Device Table Viewer
+# Confluence Device Table Viewer
 
 A local web viewer for the device table stored in Confluence. Fetches the table, displays it with an intuitive UI, and provides network utilities like ping checks and port scanning.
 
@@ -137,4 +137,4 @@ The application consists of:
 
 ## License
 
-© Hopkins TS Lab. All rights reserved.
+© Device Table Viewer. All rights reserved.

@@ -1,5 +1,5 @@
 """
-Hopkins TS Lab – Device Table Viewer
+Confluence Device Table Viewer
 =====================================
 Fetches the device table from Confluence and serves it locally at http://localhost:8080
 
@@ -55,8 +55,8 @@ def load_env_file(path: str) -> None:
 load_env_file(ENV_FILE)
 
 # ── Configuration ────────────────────────────────────────────────────────────
-CONFLUENCE_BASE = "https://onedigi.atlassian.net/wiki"
-PAGE_ID = "35527991917"
+CONFLUENCE_BASE = os.getenv("CONFLUENCE_BASE", "https://your-domain.atlassian.net/wiki")
+PAGE_ID = os.getenv("CONFLUENCE_PAGE_ID", "35527991917")
 EMAIL = os.getenv("ATLASSIAN_EMAIL")
 API_TOKEN = os.getenv("ATLASSIAN_API_TOKEN")
 PORT = 8080
@@ -98,7 +98,7 @@ def run_port_scan(ip: str) -> dict:
     """Run an nmap TCP connect scan over the top-1000 most common ports.
 
     Uses -sT (connect scan) so it needs no root, and -Pn so devices that
-    don't answer ping (some Digi gear) are still probed. Returns a dict with
+    don't answer ping are still probed. Returns a dict with
     an "ports" list of {port, proto, service} or an "error" string.
     """
     cmd = [
@@ -166,8 +166,8 @@ def extract_tables(html: str) -> str:
 
 
 def load_logo_base64() -> str:
-    """Load the Digi logo as a base64 data URI, or return empty string."""
-    logo_path = os.path.join(SCRIPT_DIR, "digiicono.png")
+    """Load the logo as a base64 data URI, or return empty string."""
+    logo_path = os.path.join(SCRIPT_DIR, "logo.png")
     try:
         with open(logo_path, "rb") as f:
             data = base64.b64encode(f.read()).decode("utf-8")
@@ -179,7 +179,7 @@ def load_logo_base64() -> str:
 def build_full_page(table_html: str, logo_data_uri: str, fetched_at: str) -> str:
     """Wrap the raw table HTML in a styled, responsive page with dark/light mode toggle."""
     logo_tag = (
-        f'<img src="{logo_data_uri}" alt="Digi" class="logo">'
+        f'<img src="{logo_data_uri}" alt="Logo" class="logo">'
         if logo_data_uri else ""
     )
 
@@ -188,7 +188,7 @@ def build_full_page(table_html: str, logo_data_uri: str, fetched_at: str) -> str
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hopkins TS Lab – Device Table</title>
+  <title>Device Table Viewer</title>
   <style>
     /* ── Theme tokens ─────────────────────────────────────── */
     :root {{
@@ -751,7 +751,7 @@ def build_full_page(table_html: str, logo_data_uri: str, fetched_at: str) -> str
   <header>
     {logo_tag}
     <div class="header-text">
-      <h1>Hopkins TS Lab &middot; Device Table</h1>
+      <h1>Device Table &middot; Viewer</h1>
       <p><span class="live-dot"></span> Live from Confluence &middot; fetched <span id="fetchedAt">{fetched_at}</span></p>
     </div>
     <div class="header-actions">
